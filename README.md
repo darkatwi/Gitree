@@ -2,46 +2,48 @@
 
 A Python CLI script for printing the structure of your project in a visually easy-to-read format. Respects `.gitignore` files when present so ignored files and folders are omitted from the output.
 
-**Features**
 
-- Print a tree view of a project directory (default: current directory).
-- Respects `.gitignore` to filter ignored files.
-- Minimal, dependency-free Python script.
+## Quick Setup
 
-**Requirements**
+- Clone or copy this repository.
 
-- Python 3.8 or newer.
+````
+git clone https://github.com/shahzaibahmad05/printstruct
+````
 
-**Quick start**
+- Run the script from your project root:
 
-1. Clone or copy this repository.
-2. Run the script from your project root:
+````
+python structure.py <your_project_path>
+````
 
-```bash
-python structure.py
-```
+**Note**: It is recommended to put `structure.py` in your *projects* directory, so you can simply do:
 
-To print a different directory:
+````
+python structure.py <project_directory_name>
+````
 
-```bash
-python structure.py path/to/project
-```
 
-If the directory contains a `.gitignore` file, ignored paths will be omitted from the printed structure.
+## Useful CLI args
 
-**Usage**
+Other than the directory path, here are some CLI args you can use with this script:
 
-- `python structure.py [PATH]` — prints the structure for `PATH` (defaults to `.`).
-- `-h` / `--help` — shows help if the script provides an argument parser.
+**--max-depth**
 
-**Notes**
+Limits how deep the directory recursion gets. For example, `--max-depth 1` should print the files and folders directly visible from the project root.
 
-- This README assumes `structure.py` is a CLI-style script. If the script exposes additional flags (depth, show-hidden, output format), refer to its `--help` output for exact usage.
+**--all** or **-a**
 
-**Contributing**
+Includes hidden files and folders in the results. This does not override gitignore directives.
 
-- Feel free to open issues or submit pull requests to improve formatting, add features (e.g. colorized output), or add tests.
+**--ignore** 
 
-**License**
+Adds further files or folders to ignore.
 
-- MIT
+**--gitignore-depth**
+
+Controls how deep the script looks for gitignore files. For example, `--gitignore-depth 0` should include only the gitignore present at the project root.
+
+## Contributions
+
+Please feel free to open issues or submit pull requests to improve formatting, add features (e.g. colorized output), or add tests.
