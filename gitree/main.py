@@ -1,4 +1,4 @@
-# main.py
+# gitree/main.py
 from __future__ import annotations
 import sys, io, glob
 if sys.platform.startswith('win'):      # fix windows unicode error on CI
@@ -12,7 +12,7 @@ from .utilities.utils import copy_to_clipboard
 from .utilities.config import resolve_config
 from .utilities.logger import Logger, OutputBuffer
 from .services.files_selection import resolve_selected_files
-from .services.basic_cli_args import handle_basic_cli_args, resolve_root_paths
+from .services.handle_basic_cli import handle_basic_cli_args, resolve_root_paths, correct_cli_args
 
 
 def main() -> None:
@@ -26,8 +26,13 @@ def main() -> None:
     logger = Logger()
     output_buffer = OutputBuffer()
 
+
     # Resolve configuration (handle user, global, and default config merging)
     resolve_config(args)
+
+
+    # Fix any incorrect CLI args (paths missing extensions, etc.)
+    args = correct_cli_args(args)
 
 
     # if some specific Basic CLI args given, execute and return
@@ -37,19 +42,11 @@ def main() -> None:
 
     # Validate and resolve all paths
     roots = resolve_root_paths(args)
-    
 
-    if args.output is not None:     # TODO: relocate this code for file output
-        # Determine filename
-        filename = args.output
-        # Add .txt extension only if no extension provided
-        if not Path(filename).suffix:
-            filename += '.txt'
 
     if args.copy or args.output is not None:
         # Capture stdout
         output_buffer = io.StringIO()
-        original_stdout = sys.stdout
         sys.stdout = output_buffer
 
     # if zipping is requested
@@ -150,10 +147,10 @@ def main() -> None:
             content = output_buffer.getvalue()
 
             # Wrap in markdown code block if .md extension
-            if filename.endswith('.md'):
+            if args.output.endswith('.md'):
                 content = f"```\n{content}```\n"
 
-            with open(filename, 'w', encoding='utf-8') as f:
+            with open(args.output, 'w', encoding='utf-8') as f:
                 f.write(content)
 
         if args.copy:       # Capture output if needed for clipboard

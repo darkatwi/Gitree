@@ -127,16 +127,10 @@ def parse_args() -> argparse.Namespace:
         help="Patterns of files to include (e.g. *.py)",
     )
     ap.add_argument(
-        "--include-file-type",
-        type=str,
-        default=argparse.SUPPRESS,
-        help="Include files of a specific type (e.g. json, py)",
-    )
-    ap.add_argument(
         "--include-file-type", "--include-file-types",
         nargs="*",
         default=argparse.SUPPRESS,
-        help="Include files of multiple types (e.g. png jpg)",
+        help="Include files of multiple types, or a specific type (e.g. png jpg)",
     )
     ap.add_argument(
         "--no-limit",
