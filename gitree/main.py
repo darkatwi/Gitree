@@ -27,7 +27,7 @@ def main() -> None:
     args = parse_args()
 
     # Resolve --no-contents-for paths
-    no_contents_for = [Path(p).resolve() for p in args.no_contents_for]
+    args.no_contents_for = [Path(p).resolve() for p in args.no_contents_for]
 
     logger = Logger()
     output_buffer = OutputBuffer()
