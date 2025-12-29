@@ -59,7 +59,7 @@ class TestListingFlags(BaseCLISetup):
         for i in range(30):  # default limit is 20
             (self.root / "folder" / f"file{i}.txt").write_text("data")
 
-        result = self._run_cli("--no-limit")
+        result = self._run_cli("--no-limit", "--max-lines", "100")
 
         self.assertEqual(result.returncode, 0, msg=result.stderr)
         self.assertTrue(result.stdout.strip())

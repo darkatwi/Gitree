@@ -1,6 +1,7 @@
 import argparse
 from pathlib import Path
 from ..utilities.utils import max_items_int
+from ..utilities.utils import max_lines_int
 
 def parse_args() -> argparse.Namespace:
     """
@@ -55,6 +56,12 @@ def parse_args() -> argparse.Namespace:
         "--init-config",
         action="store_true",
         help="Create a default config.json file in the current directory",
+    )
+    ap.add_argument(
+        "--max-lines",
+        type=max_lines_int,
+        default=argparse.SUPPRESS,
+        help="Limit lines shown in the tree output",
     )
     basic.add_argument(
         "--config-user",
